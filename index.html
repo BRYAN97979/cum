@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feliz cumpleaños, Sol</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,400&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Música (archivo musi.mp3 en la misma carpeta) -->
+  <audio id="musica" src="musi.mp3" loop preload="auto"></audio>
+
+  <!-- Pétalos que caen -->
+  <div class="petalos" id="petalos" aria-hidden="true"></div>
+
+  <!-- PANTALLA DE INICIO: caja de regalo 3D -->
+  <section class="portada" id="portada">
+    <div class="regalo-caja" aria-hidden="true">
+      <span class="brillo" style="--x:6%;  --y:14%; --t:0s"></span>
+      <span class="brillo" style="--x:88%; --y:8%;  --t:.8s"></span>
+      <span class="brillo" style="--x:94%; --y:62%; --t:1.5s"></span>
+      <span class="brillo" style="--x:0%;  --y:68%; --t:2.1s"></span>
+
+      <div class="caja">
+        <div class="cara f1"></div>
+        <div class="cara f2"></div>
+        <div class="cara f3"></div>
+        <div class="cara f4"></div>
+        <div class="cara f5 arriba">
+          <div class="lazo"><i></i></div>
+        </div>
+        <div class="cara f6"></div>
+      </div>
+      <div class="caja-sombra"></div>
+    </div>
+
+    <p class="portada-texto">Hay una sorpresa esperándote</p>
+    <button class="boton" id="btnAbrir">Abrir sorpresa</button>
+  </section>
+
+  <!-- PÁGINA PRINCIPAL -->
+  <main class="escena" id="escena">
+
+    <header class="titulo">
+      <h1>Feliz cumpleaños <br><span>Sol..</span></h1>
+    </header>
+
+    <!-- PASTEL (estilo caricatura kawaii).
+         Es un dibujo SVG: puedes cambiar los colores en cada fill="..." -->
+    <div class="pastel" aria-label="Pastel de cumpleaños con carita feliz">
+      <svg viewBox="0 0 400 470" xmlns="http://www.w3.org/2000/svg" role="img">
+        <defs>
+          <linearGradient id="choco" x1="0" x2="1">
+            <stop offset="0" stop-color="#b9743b"/><stop offset=".55" stop-color="#9c5b2c"/><stop offset="1" stop-color="#7a4222"/>
+          </linearGradient>
+          <linearGradient id="platoG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#34d3e6"/><stop offset="1" stop-color="#139bb2"/>
+          </linearGradient>
+          <radialGradient id="globoG" cx=".35" cy=".3" r=".8">
+            <stop offset="0" stop-color="#ff8aa0"/><stop offset=".5" stop-color="#ee2f55"/><stop offset="1" stop-color="#b8153a"/>
+          </radialGradient>
+          <radialGradient id="verdeG" cx=".35" cy=".3" r=".8">
+            <stop offset="0" stop-color="#d7ff8a"/><stop offset=".5" stop-color="#6fd12e"/><stop offset="1" stop-color="#3b9a17"/>
+          </radialGradient>
+
+          <clipPath id="cuerpo1"><path d="M90 300 L90 392 C90 418 140 424 200 424 C260 424 310 418 310 392 L310 300 Z"/></clipPath>
+          <clipPath id="cuerpo2"><path d="M118 188 L118 300 C118 318 158 324 200 324 C242 324 282 318 282 300 L282 188 Z"/></clipPath>
+          <clipPath id="gorroA"><path d="M128 184 L150 116 L172 184 Z"/></clipPath>
+          <clipPath id="gorroB"><path d="M228 184 L250 116 L272 184 Z"/></clipPath>
+
+          <symbol id="estrella" viewBox="0 0 24 24">
+            <polygon points="12,1 15,9 23,9.5 17,15 19,23 12,18.5 5,23 7,15 1,9.5 9,9" stroke-linejoin="round"/>
+          </symbol>
+
+          <!-- cupcake (se usa a la izquierda y, en espejo, a la derecha) -->
+          <g id="cupcake">
+            <path d="M36 328 L92 328 L84 396 L44 396 Z" fill="#ffb93d" stroke="#8a4a12" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M52 332 L54 394 M64 332 L64 394 M76 332 L74 394" stroke="#d77d12" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M32 328 C28 298 46 284 64 284 C82 284 100 298 96 328 Q88 336 80 328 Q72 336 64 328 Q56 336 48 328 Q40 336 32 328 Z" fill="#ff3d6b" stroke="#8c1233" stroke-width="2.5" stroke-linejoin="round"/>
+            <ellipse cx="50" cy="302" rx="7" ry="4" fill="#fff" opacity=".55" transform="rotate(-30 50 302)"/>
+            <path d="M64 256 Q66 240 72 228" stroke="#2c6e12" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <circle cx="64" cy="270" r="14" fill="url(#verdeG)" stroke="#2c6e12" stroke-width="2.5"/>
+            <ellipse cx="59" cy="264" rx="4" ry="3" fill="#fff" opacity=".8"/>
+          </g>
+        </defs>
+
+        <!-- Estrellas y confeti de fondo -->
+        <g stroke-width="1.5">
+          <use class="est" style="--t:0s"   href="#estrella" x="106" y="42"  width="26" height="26" fill="#ffd23f" stroke="#e0a000"/>
+          <use class="est" style="--t:.7s"  href="#estrella" x="250" y="22"  width="28" height="28" fill="#ffd23f" stroke="#e0a000"/>
+          <use class="est" style="--t:1.2s" href="#estrella" x="16"  y="146" width="28" height="28" fill="#ffd23f" stroke="#e0a000"/>
+          <use class="est" style="--t:.4s"  href="#estrella" x="356" y="160" width="26" height="26" fill="#ffd23f" stroke="#e0a000"/>
+          <use class="est" style="--t:1.6s" href="#estrella" x="292" y="104" width="20" height="20" fill="#ffd23f" stroke="#e0a000"/>
+          <use class="est" style="--t:.9s"  href="#estrella" x="28"  y="196" width="24" height="24" fill="#a56bd9" stroke="#6b3a9c"/>
+          <use class="est" style="--t:1.9s" href="#estrella" x="346" y="108" width="22" height="22" fill="#a56bd9" stroke="#6b3a9c"/>
+          <use class="est" style="--t:.2s"  href="#estrella" x="88"  y="112" width="16" height="16" fill="#ff7eb6" stroke="#d6408f"/>
+        </g>
+        <circle cx="90"  cy="28"  r="5" fill="#ff7eb6"/>
+        <circle cx="305" cy="30"  r="4" fill="#7de8d0"/>
+        <circle cx="224" cy="54"  r="3" fill="#ffd23f"/>
+        <circle cx="378" cy="62"  r="4" fill="#c78bff"/>
+        <circle cx="14"  cy="108" r="4" fill="#ffd23f"/>
+        <circle cx="388" cy="214" r="4" fill="#ff7eb6"/>
+
+        <!-- Globos -->
+        <g class="globo" style="--t:0s">
+          <path d="M62 109 Q50 140 82 176" stroke="#8a6a7a" fill="none" stroke-width="1.8"/>
+          <ellipse cx="62" cy="76" rx="26" ry="31" fill="url(#globoG)" stroke="#8c1233" stroke-width="2.5"/>
+          <path d="M62 107 L56 116 L68 116 Z" fill="#c21a42"/>
+          <ellipse cx="51" cy="62" rx="6" ry="9" fill="#fff" opacity=".75" transform="rotate(25 51 62)"/>
+        </g>
+        <g class="globo" style="--t:1.4s">
+          <path d="M340 111 Q352 140 318 176" stroke="#8a6a7a" fill="none" stroke-width="1.8"/>
+          <ellipse cx="340" cy="80" rx="26" ry="31" fill="url(#globoG)" stroke="#8c1233" stroke-width="2.5"/>
+          <path d="M340 111 L334 120 L346 120 Z" fill="#c21a42"/>
+          <ellipse cx="329" cy="66" rx="6" ry="9" fill="#fff" opacity=".75" transform="rotate(25 329 66)"/>
+        </g>
+
+        <!-- Plato turquesa -->
+        <ellipse cx="200" cy="432" rx="170" ry="30" fill="#0b7f95"/>
+        <ellipse cx="200" cy="424" rx="170" ry="30" fill="url(#platoG)"/>
+        <ellipse cx="200" cy="424" rx="132" ry="21" fill="none" stroke="#0f9db4" stroke-width="3" opacity=".6"/>
+        <use href="#estrella" x="52" y="418" width="18" height="18" fill="#fff" opacity=".9"/>
+
+        <!-- Cupcakes laterales -->
+        <use href="#cupcake"/>
+        <use href="#cupcake" transform="translate(400 0) scale(-1 1)"/>
+
+        <g class="torta">
+          <!-- ===== PISO DE ABAJO ===== -->
+          <path d="M90 300 L90 392 C90 418 140 424 200 424 C260 424 310 418 310 392 L310 300 Z" fill="url(#choco)"/>
+          <g clip-path="url(#cuerpo1)">
+            <path d="M80 388 Q200 418 320 388 L320 408 Q200 442 80 408 Z" fill="#ffd877"/>
+          </g>
+          <path d="M90 300 L90 392 C90 418 140 424 200 424 C260 424 310 418 310 392 L310 300 Z" fill="none" stroke="#5a2a1a" stroke-width="3" stroke-linejoin="round"/>
+
+          <ellipse cx="200" cy="308" rx="112" ry="32" fill="#ff6fb3"/>
+          <g fill="#ff6fb3">
+            <rect x="93"  y="300" width="18" height="62" rx="9"/>
+            <rect x="117" y="300" width="18" height="44" rx="9"/>
+            <rect x="143" y="300" width="18" height="40" rx="9"/>
+            <rect x="191" y="300" width="18" height="46" rx="9"/>
+            <rect x="239" y="300" width="18" height="40" rx="9"/>
+            <rect x="265" y="300" width="18" height="44" rx="9"/>
+            <rect x="289" y="300" width="18" height="62" rx="9"/>
+          </g>
+          <ellipse cx="200" cy="300" rx="112" ry="32" fill="#ff8ec8" stroke="#d6408f" stroke-width="2.5"/>
+          <ellipse cx="200" cy="297" rx="96" ry="24" fill="#ffa8d6" opacity=".6"/>
+          <g>
+            <circle cx="104" cy="302" r="3" fill="#ffd23f"/>
+            <circle cx="298" cy="304" r="3" fill="#4fd8c4"/>
+            <circle cx="140" cy="318" r="3" fill="#a56bd9"/>
+            <circle cx="170" cy="326" r="3" fill="#ffd23f"/>
+            <circle cx="232" cy="326" r="3" fill="#fff"/>
+            <circle cx="262" cy="318" r="3" fill="#4fd8c4"/>
+            <circle cx="200" cy="332" r="3" fill="#a56bd9"/>
+          </g>
+
+          <!-- carita de abajo -->
+          <g transform="translate(200 362)">
+            <g class="ojo">
+              <circle cx="-37" cy="0" r="14" fill="#fff" stroke="#4a1d1d" stroke-width="2.5"/>
+              <circle cx="-37" cy="1" r="9" fill="#3b1220"/>
+              <circle cx="-41" cy="-3" r="3.5" fill="#fff"/>
+              <circle cx="-33" cy="5" r="1.8" fill="#fff"/>
+            </g>
+            <g class="ojo">
+              <circle cx="37" cy="0" r="14" fill="#fff" stroke="#4a1d1d" stroke-width="2.5"/>
+              <circle cx="37" cy="1" r="9" fill="#3b1220"/>
+              <circle cx="33" cy="-3" r="3.5" fill="#fff"/>
+              <circle cx="41" cy="5" r="1.8" fill="#fff"/>
+            </g>
+            <ellipse cx="-62" cy="14" rx="10" ry="7" fill="#ff8fb0" opacity=".75"/>
+            <ellipse cx="62"  cy="14" rx="10" ry="7" fill="#ff8fb0" opacity=".75"/>
+            <path d="M-14 12 Q0 36 14 12 Z" fill="#e0264f" stroke="#4a1d1d" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M-7 22 Q0 28 7 22 Q0 18 -7 22 Z" fill="#ff8aa0"/>
+          </g>
+
+          <!-- ===== PISO DE ARRIBA ===== -->
+          <path d="M118 188 L118 300 C118 318 158 324 200 324 C242 324 282 318 282 300 L282 188 Z" fill="url(#choco)"/>
+          <g clip-path="url(#cuerpo2)">
+            <path d="M108 292 Q200 316 292 292 L292 308 Q200 334 108 308 Z" fill="#ffd877"/>
+          </g>
+          <path d="M118 188 L118 300 C118 318 158 324 200 324 C242 324 282 318 282 300 L282 188 Z" fill="none" stroke="#5a2a1a" stroke-width="3" stroke-linejoin="round"/>
+
+          <ellipse cx="200" cy="196" rx="82" ry="24" fill="#ff6fb3"/>
+          <g fill="#ff6fb3">
+            <rect x="120" y="188" width="16" height="52" rx="8"/>
+            <rect x="144" y="188" width="16" height="44" rx="8"/>
+            <rect x="192" y="188" width="16" height="46" rx="8"/>
+            <rect x="240" y="188" width="16" height="44" rx="8"/>
+            <rect x="264" y="188" width="16" height="52" rx="8"/>
+          </g>
+          <ellipse cx="200" cy="188" rx="82" ry="24" fill="#ff8ec8" stroke="#d6408f" stroke-width="2.5"/>
+          <ellipse cx="200" cy="186" rx="70" ry="18" fill="#ffa8d6" opacity=".6"/>
+          <g>
+            <circle cx="130" cy="186" r="3" fill="#ffd23f"/>
+            <circle cx="272" cy="188" r="3" fill="#4fd8c4"/>
+            <circle cx="158" cy="203" r="3" fill="#a56bd9"/>
+            <circle cx="242" cy="203" r="3" fill="#ffd23f"/>
+            <circle cx="200" cy="208" r="3" fill="#fff"/>
+          </g>
+
+          <!-- carita de arriba -->
+          <g transform="translate(200 252) scale(.85)">
+            <g class="ojo">
+              <circle cx="-37" cy="0" r="14" fill="#fff" stroke="#4a1d1d" stroke-width="2.5"/>
+              <circle cx="-37" cy="1" r="9" fill="#3b1220"/>
+              <circle cx="-41" cy="-3" r="3.5" fill="#fff"/>
+              <circle cx="-33" cy="5" r="1.8" fill="#fff"/>
+            </g>
+            <g class="ojo">
+              <circle cx="37" cy="0" r="14" fill="#fff" stroke="#4a1d1d" stroke-width="2.5"/>
+              <circle cx="37" cy="1" r="9" fill="#3b1220"/>
+              <circle cx="33" cy="-3" r="3.5" fill="#fff"/>
+              <circle cx="41" cy="5" r="1.8" fill="#fff"/>
+            </g>
+            <ellipse cx="-62" cy="14" rx="10" ry="7" fill="#ff8fb0" opacity=".75"/>
+            <ellipse cx="62"  cy="14" rx="10" ry="7" fill="#ff8fb0" opacity=".75"/>
+            <path d="M-14 12 Q0 36 14 12 Z" fill="#e0264f" stroke="#4a1d1d" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M-7 22 Q0 28 7 22 Q0 18 -7 22 Z" fill="#ff8aa0"/>
+          </g>
+
+          <!-- Gorrito azul -->
+          <g transform="rotate(-18 150 184)">
+            <path d="M128 184 L150 116 L172 184 Z" fill="#4b9bff"/>
+            <g clip-path="url(#gorroA)" stroke="#fff" stroke-width="7">
+              <path d="M120 148 L180 132 M120 168 L180 152 M120 188 L180 172"/>
+            </g>
+            <path d="M128 184 L150 116 L172 184 Z" fill="none" stroke="#1c4a8c" stroke-width="2.5" stroke-linejoin="round"/>
+            <ellipse cx="150" cy="184" rx="22" ry="5" fill="#2d6fd1" stroke="#1c4a8c" stroke-width="2"/>
+            <circle cx="150" cy="116" r="5" fill="#ffd23f" stroke="#c88a00" stroke-width="1.5"/>
+          </g>
+
+          <!-- Gorrito naranja -->
+          <g transform="rotate(18 250 184)">
+            <path d="M228 184 L250 116 L272 184 Z" fill="#ffa21f"/>
+            <g clip-path="url(#gorroB)" stroke="#fff2b5" stroke-width="7">
+              <path d="M220 148 L280 132 M220 168 L280 152 M220 188 L280 172"/>
+            </g>
+            <path d="M228 184 L250 116 L272 184 Z" fill="none" stroke="#a8520b" stroke-width="2.5" stroke-linejoin="round"/>
+            <ellipse cx="250" cy="184" rx="22" ry="5" fill="#ef8a00" stroke="#a8520b" stroke-width="2"/>
+            <circle cx="250" cy="116" r="5" fill="#ff7eb6" stroke="#d6408f" stroke-width="1.5"/>
+          </g>
+
+          <!-- Merengue turquesa con cereza -->
+          <ellipse cx="200" cy="184" rx="42" ry="14" fill="#41cdb3" stroke="#17806c" stroke-width="2.5"/>
+          <ellipse cx="200" cy="170" rx="34" ry="12" fill="#5fe0c6" stroke="#17806c" stroke-width="2.5"/>
+          <ellipse cx="200" cy="157" rx="25" ry="10" fill="#7eecd4" stroke="#17806c" stroke-width="2.5"/>
+          <ellipse cx="200" cy="146" rx="14" ry="8"  fill="#9ff3e0" stroke="#17806c" stroke-width="2.5"/>
+          <path d="M200 90 C193 108 180 114 183 132 C186 146 214 146 217 132 C220 114 207 108 200 90 Z" fill="#ee2f55" stroke="#8c1233" stroke-width="2.5" stroke-linejoin="round"/>
+          <ellipse cx="192" cy="124" rx="4" ry="9" fill="#fff" opacity=".7" transform="rotate(15 192 124)"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- MENSAJE (edítalo a tu gusto) -->
+    <section class="mensaje">
+      <p>
+        Hoy el mundo celebra el día en que llegó alguien tan luminosa como tú.
+        Tu nombre lo dice todo: donde tú estás, todo se vuelve más cálido y más bonito.
+      </p>
+      <p>
+        Que este nuevo año te traiga risas sin medida, abrazos de los que te quedan en el corazón
+        y todos los sueños que llevas dentro. Gracias por existir y por iluminar mi camino.
+      </p>
+      <p class="firma">Con todo mi cariño,<br> Dolly </p>
+    </section>
+
+    <!-- BOTÓN QUE DESPLIEGA LA IMAGEN -->
+    <button class="boton" id="btnRegalo" aria-expanded="false" aria-controls="regalo">Ver mi regalo</button>
+
+    <div class="regalo" id="regalo">
+      <div class="regalo-interior">
+        <img src="cum.jpeg" alt="Tu regalo de cumpleaños">
+      </div>
+    </div>
+
+    <!-- JARDÍN DE FLORES
+         --c = color, --s = tamaño, --h = altura del tallo, --d = retraso del vaivén -->
+    <div class="jardin" aria-hidden="true">
+      <div class="flor" style="--c:#ff6fa5; --s:78px; --h:90px;  --d:0s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+      <div class="flor" style="--c:#ffa6c9; --s:64px; --h:135px; --d:.6s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+      <div class="flor" style="--c:#f2478d; --s:88px; --h:70px;  --d:1.1s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+      <div class="flor" style="--c:#ffc4dc; --s:68px; --h:120px; --d:.3s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+      <div class="flor" style="--c:#ff7eb6; --s:80px; --h:100px; --d:.9s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+      <div class="flor" style="--c:#e8559c; --s:70px; --h:80px;  --d:1.4s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+      <div class="flor" style="--c:#ffb3d2; --s:62px; --h:128px; --d:.5s">
+        <div class="corola"><i></i><i></i><i></i><i></i><i></i><i></i><em></em><em></em><em></em><em></em><em></em><em></em><b></b></div><span class="tallo"></span>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const musica    = document.getElementById('musica');
+    const portada   = document.getElementById('portada');
+    const escena    = document.getElementById('escena');
+    const btnAbrir  = document.getElementById('btnAbrir');
+    const btnRegalo = document.getElementById('btnRegalo');
+    const regalo    = document.getElementById('regalo');
+
+    // Al presionar el primer botón: suena la música y aparece la página
+    btnAbrir.addEventListener('click', () => {
+      musica.play().catch(() => {});
+      portada.classList.add('oculta');
+      escena.classList.add('visible');
+    });
+
+    // Segundo botón: despliega / oculta la imagen cum.png
+    btnRegalo.addEventListener('click', () => {
+      const abierto = regalo.classList.toggle('abierto');
+      btnRegalo.setAttribute('aria-expanded', abierto);
+      btnRegalo.textContent = abierto ? 'Ocultar regalo' : 'Ver mi regalo';
+      if (abierto) {
+        setTimeout(() => regalo.scrollIntoView({ behavior: 'smooth', block: 'center' }), 250);
+      }
+    });
+
+    // Pétalos que caen (cambia 22 por más o menos)
+    const contenedor = document.getElementById('petalos');
+    const colores = ['#ff6fa5', '#ffa6c9', '#ffc4dc', '#f2478d', '#ffd9e8'];
+    for (let i = 0; i < 22; i++) {
+      const p = document.createElement('span');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.background = colores[i % colores.length];
+      p.style.animationDuration = (9 + Math.random() * 9) + 's';
+      p.style.animationDelay = (-Math.random() * 15) + 's';
+      p.style.setProperty('--w', (8 + Math.random() * 10) + 'px');
+      contenedor.appendChild(p);
+    }
+  </script>
+</body>
+</html>

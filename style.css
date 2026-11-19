@@ -1,0 +1,476 @@
+/* ============================================
+   COLORES (cámbialos aquí si quieres)
+   ============================================ */
+:root {
+  --vino:    #3b0d2f;   /* fondo oscuro */
+  --ciruela: #7b2158;
+  --rosa:    #d94f94;
+  --rosado:  #ff8fbb;
+  --blush:   #ffd9e8;   /* rosa muy claro */
+  --perla:   #fff4f8;   /* texto claro */
+  --dorado:  #f6c9a8;   /* rosa dorado */
+  --hoja:    #5fbf7f;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  font-family: 'Nunito', system-ui, sans-serif;
+  color: var(--perla);
+  background: linear-gradient(180deg, var(--vino) 0%, var(--ciruela) 40%, #c4558f 75%, var(--rosado) 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.boton {
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 14px 36px;
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(120, 0, 60, .45);
+  background: linear-gradient(180deg, #ffa6cc 0%, #ff5c9d 55%, #e63e87 100%);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, .55),
+              inset 0 -3px 6px rgba(150, 0, 70, .35),
+              0 10px 24px rgba(230, 62, 135, .5);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.boton:hover  { transform: translateY(-2px); box-shadow: inset 0 2px 3px rgba(255,255,255,.55), inset 0 -3px 6px rgba(150,0,70,.35), 0 14px 32px rgba(230,62,135,.65); }
+.boton:active { transform: scale(.97); }
+.boton:focus-visible { outline: 3px solid var(--perla); outline-offset: 4px; }
+
+/* ============================================
+   PORTADA (pantalla de inicio)
+   ============================================ */
+.portada {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding: 24px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 32%, #d85a9b 0%, #8f2a66 38%, #3b0d2f 100%);
+  transition: opacity 1s ease, visibility 1s ease;
+}
+.portada.oculta { opacity: 0; visibility: hidden; }
+
+.portada-texto {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  text-shadow: 0 2px 12px rgba(255, 143, 187, .6);
+}
+
+/* ---------- Caja de regalo 3D ---------- */
+.regalo-caja {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  perspective: 900px;
+  display: grid;
+  place-items: center;
+  animation: flotar 3.2s ease-in-out infinite;
+}
+@keyframes flotar {
+  50% { transform: translateY(-12px); }
+}
+
+.caja {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  transform-style: preserve-3d;
+  animation: girar 11s linear infinite;
+}
+@keyframes girar {
+  from { transform: rotateX(-26deg) rotateY(0deg); }
+  to   { transform: rotateX(-26deg) rotateY(360deg); }
+}
+
+.cara {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  /* listón vertical + horizontal sobre un fondo rosado con brillo */
+  background:
+    linear-gradient(90deg, transparent 41%, #fff 41%, #ffe3ee 50%, #fff 59%, transparent 59%),
+    linear-gradient(0deg,  transparent 41%, #fff 41%, #ffe3ee 50%, #fff 59%, transparent 59%),
+    linear-gradient(135deg, #ffb0d0 0%, #ff74ad 55%, #e8458c 100%);
+  box-shadow: inset 0 0 18px rgba(120, 0, 60, .25);
+  backface-visibility: hidden;
+}
+.f1 { transform: translateZ(60px); }
+.f2 { transform: rotateY(90deg)  translateZ(60px); filter: brightness(.86); }
+.f3 { transform: rotateY(180deg) translateZ(60px); filter: brightness(.72); }
+.f4 { transform: rotateY(-90deg) translateZ(60px); filter: brightness(.9); }
+.f5 { transform: rotateX(90deg)  translateZ(60px); }
+.f6 { transform: rotateX(-90deg) translateZ(60px); filter: brightness(.55); }
+
+/* lazo sobre la tapa */
+.lazo { position: absolute; inset: 0; }
+.lazo::before,
+.lazo::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 46px; height: 28px;
+  border: 9px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 3px 6px rgba(120, 0, 60, .35), inset 0 2px 4px rgba(255, 150, 190, .6);
+}
+.lazo::before { transform: translate(-100%, -50%) rotate(-22deg); }
+.lazo::after  { transform: translate(0, -50%)     rotate(22deg); }
+.lazo i {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 22px; height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, #ffc2db 70%, #ff8fbb);
+  box-shadow: 0 2px 6px rgba(120, 0, 60, .45);
+  z-index: 2;
+}
+
+.caja-sombra {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 150px;
+  height: 22px;
+  margin-left: -75px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, .5), transparent 70%);
+  filter: blur(4px);
+}
+
+/* destellos alrededor */
+.brillo {
+  position: absolute;
+  left: var(--x); top: var(--y);
+  width: 18px; height: 18px;
+  background: #fff;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  filter: drop-shadow(0 0 6px #ffb3d2);
+  animation: titilar 2.4s ease-in-out infinite;
+  animation-delay: var(--t);
+}
+@keyframes titilar {
+  0%, 100% { opacity: .25; transform: scale(.6) rotate(0deg); }
+  50%      { opacity: 1;   transform: scale(1.15) rotate(45deg); }
+}
+
+/* ============================================
+   ESCENA PRINCIPAL
+   ============================================ */
+.escena {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 38px;
+  padding: 56px 20px 0;
+  opacity: 0;
+  transition: opacity 1.4s ease .5s;
+}
+.escena.visible { opacity: 1; }
+
+.titulo { text-align: center; }
+.titulo h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  line-height: 1.15;
+  text-shadow: 0 3px 14px rgba(59, 13, 47, .6);
+}
+.titulo h1 span {
+  display: inline-block;
+  font-size: 1.7em;
+  font-weight: 700;
+  font-style: italic;
+  background: linear-gradient(180deg, #fff 10%, var(--blush) 45%, var(--dorado) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 10px rgba(255, 105, 170, .65));
+}
+
+/* ============================================
+   PASTEL (dibujo SVG estilo caricatura)
+   ============================================ */
+.pastel {
+  width: min(400px, 94vw);
+  margin-top: 20px;
+  filter: drop-shadow(0 14px 14px rgba(40, 0, 25, .35));
+}
+.pastel svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* los pisos "respiran" suavemente */
+.torta {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: respirar 3.4s ease-in-out infinite;
+}
+@keyframes respirar {
+  50% { transform: scale(1.012, 1.02); }
+}
+
+/* globos que se mecen */
+.globo {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: mecer-globo 4s ease-in-out infinite alternate;
+  animation-delay: var(--t, 0s);
+}
+@keyframes mecer-globo {
+  from { transform: rotate(-4deg) translateY(0); }
+  to   { transform: rotate(4deg)  translateY(-6px); }
+}
+
+/* estrellas que titilan */
+.est {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: estrellita 2.6s ease-in-out infinite;
+  animation-delay: var(--t, 0s);
+}
+@keyframes estrellita {
+  0%, 100% { opacity: .55; transform: scale(.85) rotate(0deg); }
+  50%      { opacity: 1;   transform: scale(1.12) rotate(12deg); }
+}
+
+/* los ojos parpadean */
+.ojo {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: parpadear 5s infinite;
+}
+@keyframes parpadear {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95%           { transform: scaleY(.1); }
+}
+
+/* ============================================
+   MENSAJE
+   ============================================ */
+.mensaje {
+  max-width: 560px;
+  padding: 30px 28px;
+  text-align: center;
+  line-height: 1.75;
+  font-size: 1.08rem;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .05));
+  border: 1px solid rgba(255, 217, 232, .45);
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(59, 13, 47, .4), inset 0 1px 0 rgba(255, 255, 255, .35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.mensaje p + p { margin-top: 1em; }
+.firma {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--blush);
+}
+
+/* ============================================
+   REGALO (imagen cum.png que se despliega)
+   ============================================ */
+.regalo {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  max-width: 560px;
+  opacity: 0;
+  transition: grid-template-rows .9s ease, opacity .9s ease;
+}
+.regalo.abierto {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.regalo-interior { overflow: hidden; padding: 4px; }
+
+.regalo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 8px solid var(--perla);
+  border-radius: 20px;
+  box-shadow: 0 22px 50px rgba(40, 0, 25, .55), 0 0 44px rgba(255, 143, 187, .55);
+}
+
+/* ============================================
+   JARDÍN DE FLORES
+   ============================================ */
+.jardin {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  gap: clamp(6px, 3vw, 26px);
+  width: 100%;
+  margin-top: 40px;
+  padding-top: 20px;
+  min-height: 230px;
+  background: linear-gradient(transparent, rgba(50, 110, 70, .5));
+}
+
+.flor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: 50% 100%;
+  animation: mecer 4s ease-in-out infinite alternate;
+  animation-delay: var(--d);
+}
+@keyframes mecer {
+  from { transform: rotate(-4deg); }
+  to   { transform: rotate(4deg); }
+}
+
+.corola {
+  position: relative;
+  width: var(--s);
+  height: var(--s);
+  zoom: 1;
+  filter: drop-shadow(0 7px 5px rgba(60, 0, 35, .35));
+}
+
+/* pétalos exteriores */
+.corola i {
+  position: absolute;
+  left: 50%; bottom: 50%;
+  width: 36%; height: 50%;
+  margin-left: -18%;
+  border-radius: 50% 50% 50% 50% / 75% 75% 25% 25%;
+  background: var(--c);
+  background: radial-gradient(ellipse at 50% 88%,
+      color-mix(in srgb, var(--c) 35%, #fff) 0%,
+      var(--c) 55%,
+      color-mix(in srgb, var(--c) 78%, #7a0f45) 100%);
+  box-shadow: inset 0 3px 5px rgba(255, 255, 255, .4),
+              inset 0 -5px 7px rgba(130, 0, 70, .25);
+  transform-origin: 50% 100%;
+}
+.corola i:nth-child(1) { transform: rotate(0deg); }
+.corola i:nth-child(2) { transform: rotate(60deg); }
+.corola i:nth-child(3) { transform: rotate(120deg); }
+.corola i:nth-child(4) { transform: rotate(180deg); }
+.corola i:nth-child(5) { transform: rotate(240deg); }
+.corola i:nth-child(6) { transform: rotate(300deg); }
+
+/* pétalos interiores (más pequeños y oscuros, dan profundidad) */
+.corola em {
+  position: absolute;
+  left: 50%; bottom: 50%;
+  width: 28%; height: 36%;
+  margin-left: -14%;
+  border-radius: 50% 50% 50% 50% / 75% 75% 25% 25%;
+  background: color-mix(in srgb, var(--c) 82%, #8a1450);
+  background: radial-gradient(ellipse at 50% 88%,
+      color-mix(in srgb, var(--c) 60%, #fff) 0%,
+      color-mix(in srgb, var(--c) 88%, #8a1450) 60%,
+      color-mix(in srgb, var(--c) 65%, #6b0f3a) 100%);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, .35),
+              inset 0 -4px 6px rgba(110, 0, 60, .3),
+              0 2px 3px rgba(90, 0, 50, .3);
+  transform-origin: 50% 100%;
+}
+.corola em:nth-of-type(1) { transform: rotate(30deg); }
+.corola em:nth-of-type(2) { transform: rotate(90deg); }
+.corola em:nth-of-type(3) { transform: rotate(150deg); }
+.corola em:nth-of-type(4) { transform: rotate(210deg); }
+.corola em:nth-of-type(5) { transform: rotate(270deg); }
+.corola em:nth-of-type(6) { transform: rotate(330deg); }
+
+/* centro de la flor */
+.corola b {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 24%; height: 24%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #fff6c8, #ffc857 55%, #d98a1c);
+  box-shadow: inset 0 -2px 3px rgba(120, 60, 0, .35), 0 1px 3px rgba(80, 20, 0, .4);
+}
+
+.tallo {
+  position: relative;
+  width: 6px;
+  height: var(--h);
+  border-radius: 3px;
+  background: linear-gradient(90deg, #3f9a5d, var(--hoja) 50%, #3f9a5d);
+}
+.tallo::before,
+.tallo::after {            /* hojas */
+  content: "";
+  position: absolute;
+  width: 24px; height: 13px;
+  background: linear-gradient(135deg, #7fdc9c, #3f9a5d);
+  border-radius: 0 100% 0 100%;
+  box-shadow: 0 2px 3px rgba(0, 50, 20, .3);
+}
+.tallo::before { left: 5px;  top: 35%; transform: rotate(-20deg); }
+.tallo::after  { right: 5px; top: 58%; transform: scaleX(-1) rotate(-20deg); }
+
+/* ============================================
+   PÉTALOS QUE CAEN
+   ============================================ */
+.petalos {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.petalos span {
+  position: absolute;
+  top: -30px;
+  width: var(--w, 12px);
+  height: calc(var(--w, 12px) * 1.4);
+  border-radius: 50% 0 50% 50%;
+  opacity: .85;
+  box-shadow: inset -2px -2px 4px rgba(150, 0, 80, .3);
+  animation: caer linear infinite;
+}
+@keyframes caer {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); }
+  50%  { transform: translateY(55vh) translateX(40px) rotate(180deg); }
+  100% { transform: translateY(115vh) translateX(-30px) rotate(360deg); }
+}
+
+/* ============================================
+   CELULAR
+   ============================================ */
+@media (max-width: 480px) {
+  .escena  { gap: 30px; padding-top: 40px; }
+  .mensaje { padding: 24px 20px; font-size: 1rem; }
+  .corola  { zoom: .72; }
+  .tallo   { height: calc(var(--h) * .8); }
+}
+
+/* Respeta a quien prefiere menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+}
